@@ -2,14 +2,14 @@
   "name": "jest-mock-server",
   "version": "0.0.1",
   "description": "Test your http clients with jest",
-  "main": "dist/src/server.js",
-  "types": "dist/src/server.d.ts",
+  "main": "dist/server.js",
+  "types": "dist/server.d.ts",
   "repository": "git@github.com:DanielHreben/jest-mock-server.git",
   "author": "Daniel Hreben <daniel.hreben@gmail.com>",
   "license": "MIT",
   "private": false,
   "files": [
-    "dist/src"
+    "dist"
   ],
   "tags": [
     "jest",
@@ -19,7 +19,7 @@
     "plugin"
   ],
   "scripts": {
-    "build": "rm -rf ./dist; tsc",
+    "build": "rm -rf ./dist; tsc --project ./tsconfig.build.json",
     "lint:check": "eslint . --ext .ts",
     "lint": "yarn lint:check --fix",
     "test": "jest"
