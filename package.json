@@ -1,6 +1,6 @@
 {
   "name": "jest-mock-server",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Test your http clients with jest",
   "main": "dist/server.js",
   "types": "dist/server.d.ts",
