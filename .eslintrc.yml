@@ -21,7 +21,7 @@ extends:
   - 'plugin:@typescript-eslint/eslint-recommended'
   - 'plugin:@typescript-eslint/recommended'
   - 'plugin:prettier/recommended'
-  - 'prettier/@typescript-eslint'
+  - 'prettier'
 
 rules:
   '@typescript-eslint/explicit-module-boundary-types': 0
@@ -44,5 +44,5 @@ rules:
   '@typescript-eslint/no-require-imports': 2
   'no-empty-pattern': 0
   'no-console': 2
-  'simple-import-sort/sort': 2
+  'simple-import-sort/imports': 2
   'filenames/match-regex': [2, '^[0-9a-z-.]+$']

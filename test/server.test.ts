@@ -177,9 +177,7 @@ describe('TestServer', () => {
 
         expect(mock).toHaveBeenCalledWith(
           expect.objectContaining({
-            request: {
-              path: `/test/${method}`,
-            },
+            originalUrl: `/test/${method}`,
           }),
           expect.any(Function)
         );
