@@ -1,3 +1,5 @@
+jest-mock-server / [Exports](modules.md)
+
 # jest-mock-server
 Test your http clients with jest:
   * use Koa API to define http handlers

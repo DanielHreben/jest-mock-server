@@ -22,7 +22,8 @@
     "build": "rm -rf ./dist; tsc --project ./tsconfig.build.json",
     "lint:check": "eslint . --ext .ts",
     "lint": "yarn lint:check --fix",
-    "test": "jest"
+    "test": "jest",
+    "docs": "typedoc"
   },
   "devDependencies": {
     "@types/koa-bodyparser": "^4.3.0",
@@ -41,7 +42,10 @@
     "jest": "^26.4.2",
     "node-fetch": "^2.6.1",
     "prettier": "^2.1.2",
-    "ts-jest": "^26.4.1"
+    "ts-jest": "^26.4.1",
+    "typedoc": "^0.20.35",
+    "typedoc-plugin-markdown": "^3.6.1",
+    "jest-mock-server": "file:."
   },
   "dependencies": {
     "@types/jest": "^26.0.14",

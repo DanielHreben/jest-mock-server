@@ -17,4 +17,5 @@ jobs:
       - run: yarn --frozen-lockfile
       - run: yarn lint:check
       - run: yarn build
+      - run: yarn docs
       - run: yarn test
