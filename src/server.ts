@@ -1,5 +1,5 @@
 import { createServer, RequestListener, Server } from 'http';
-import Koa from 'koa';
+import Koa, { Middleware } from 'koa';
 import buildBodyParser from 'koa-bodyparser';
 import Router from 'koa-router';
 import { AddressInfo } from 'net';
@@ -14,14 +14,7 @@ type Path = string | RegExp;
 
 function buildDefaultApp() {
   const app = new Koa();
-
-  const bodyParser = buildBodyParser({
-    extendTypes: {
-      json: ['application/json'],
-    },
-  });
-
-  app.use(bodyParser);
+  app.use(buildBodyParser());
 
   return app;
 }
@@ -106,7 +99,7 @@ export class MockServer {
       return this;
     }
 
-    await new Promise((resolve, reject) => {
+    await new Promise<void>((resolve, reject) => {
       server.close((error) => (error ? reject(error) : resolve()));
     });
 
@@ -133,6 +126,7 @@ export class MockServer {
   }
 
   private getDefaultMock() {
-    return jest.fn<ReturnType<Koa.Middleware>, Parameters<Koa.Middleware>>((ctx, next) => next());
+    const middleware: Middleware = (ctx, next) => next();
+    return jest.fn(middleware);
   }
 }
