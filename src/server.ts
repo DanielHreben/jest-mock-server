@@ -1,16 +1,23 @@
-import { createServer, RequestListener, Server } from 'http';
+import fs from 'fs';
+import http from 'http';
+import https from 'https';
 import Koa, { Middleware } from 'koa';
 import buildBodyParser from 'koa-bodyparser';
 import Router from 'koa-router';
 import { AddressInfo } from 'net';
+import path from 'path';
 import { URL } from 'url';
 
 interface Config {
   buildApp?: () => Koa;
   port?: number;
+  https?: boolean;
+  httpsKey?: string;
+  httpsCert?: string;
 }
 
 type Path = string | RegExp;
+type GenericServer = http.Server | https.Server;
 
 function buildDefaultApp() {
   const app = new Koa();
@@ -21,15 +28,26 @@ function buildDefaultApp() {
 
 export class MockServer {
   private router!: Router;
-  private server?: Server;
-  private requestListener!: RequestListener;
+  private server?: GenericServer;
+  private requestListener!: http.RequestListener;
 
   constructor(private config: Config = {}) {
     this.init();
   }
 
   public async start(): Promise<MockServer> {
-    const server = createServer((req, res) => this.requestListener(req, res));
+    let server: GenericServer;
+
+    if (this.config.https) {
+      if (!this.config.httpsKey || !this.config.httpsCert) {
+        this.config.httpsKey = path.resolve(__dirname, '../ssl/key.pem');
+        this.config.httpsCert = path.resolve(__dirname, '../ssl/cert.pem');
+      }
+      const options = { key: fs.readFileSync(this.config.httpsKey), cert: fs.readFileSync(this.config.httpsCert) };
+      server = https.createServer(options, (req, res) => this.requestListener(req, res));
+    } else {
+      server = http.createServer((req, res) => this.requestListener(req, res));
+    }
 
     await new Promise((resolve, reject) =>
       server
@@ -88,7 +106,8 @@ export class MockServer {
     }
 
     const { port } = server.address() as AddressInfo;
-    const host = 'http://localhost';
+    const protocol = this.config.https ? 'https' : 'http';
+    const host = `${protocol}://localhost`;
     return new URL(`${host}:${port}`);
   }
 

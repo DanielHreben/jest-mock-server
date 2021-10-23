@@ -1,3 +1,4 @@
+import https from 'https';
 import { Context } from 'koa';
 import Koa from 'koa';
 import fetch from 'node-fetch';
@@ -216,5 +217,24 @@ describe('TestServer', () => {
         );
       })
     );
+  });
+
+  it('Should support HTTPS', async () => {
+    server = new MockServer({
+      https: true,
+    });
+    await server.start();
+
+    expect(server.getURL().toString()).toMatch(/^https:\/\/.*/);
+
+    server.all(/.*/).mockImplementation((ctx) => {
+      ctx.body = { test: true };
+    });
+    const agent = new https.Agent({
+      rejectUnauthorized: false,
+    });
+    const res = await fetch(new URL('/blah', server.getURL()), { agent });
+    const body = await res.json();
+    expect(body).toEqual({ test: true });
   });
 });

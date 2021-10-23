@@ -45,3 +45,17 @@ describe('Testing node-fetch HTTP client', () => {
 
 ```
 
+## Using HTTPS for the server
+
+```typescript
+// You can pass in configuration to MockServer which will use the built-in certificate
+const server = new MockServer({
+  https: true
+});
+
+// If you want to supply your own certificate you can pass it in as follows
+const server = new MockServer({
+  https: true,
+  httpsKey: 'path/to/key.pem',
+  httpsCert: 'path/to/cert.pem',
+});
