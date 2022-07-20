@@ -8,6 +8,7 @@ import { URL } from 'url';
 interface Config {
   buildApp?: () => Koa;
   port?: number;
+  host?: string;
 }
 
 type Path = string | RegExp;
@@ -35,7 +36,7 @@ export class MockServer {
       server
         .on('error', reject)
         .on('listening', resolve)
-        .listen({ port: this.config.port || 0 })
+        .listen({ port: this.config.port || 0, host: this.config.host })
     );
 
     this.server = server;
