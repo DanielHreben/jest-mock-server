@@ -38,7 +38,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "jest": "^26.4.2",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.2.9",
     "prettier": "^2.1.2",
     "ts-jest": "^26.4.1",
     "typescript": "^4"
